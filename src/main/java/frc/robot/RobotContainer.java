@@ -20,6 +20,7 @@ import static frc.robot.Constants.OperatorConstants.*;
 import static frc.robot.Constants.FuelConstants.*;
 
 import frc.robot.Constants.FuelConstants;
+import frc.robot.commands.Drive;
 import frc.robot.commands.Eject;
 import frc.robot.commands.Intake;
 import frc.robot.commands.SpinUp;
@@ -55,18 +56,20 @@ public class RobotContainer {
             new Launch(fuelSubsystem)
         );
 
-        // Operator
-        // While the left bumper on operator controller is held, intake Fuel
+        // Controls
         mainController.L1().whileTrue(new Intake(fuelSubsystem));
-        // While the right bumper on the operator controller is held, spin up for 1
-        // second, then launch fuel. When the button is released, stop.
+
         mainController.R1().whileTrue(launchSequence);
-        // While the A button is held on the operator controller, eject fuel back out
-        // the intake
+
         mainController.circle().whileTrue(new Eject(fuelSubsystem));
 
 
-    }
+        
+        driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, mainController));
+
+        fuelSubsystem.setDefaultCommand(fuelSubsystem.run(() -> fuelSubsystem.stop()));
+ 
+}
 
     public Command getAutonomousCommand() {
 
