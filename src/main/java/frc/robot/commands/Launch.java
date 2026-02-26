@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CANFuelSubsystem;
 import static frc.robot.Constants.FuelConstants.*;
 
+//Bang-Bang controller
+//  import edu.wpi.first.math.controller.BangBangController;
+
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Launch extends Command {
   /** Creates a new Intake. */
@@ -20,6 +23,7 @@ public class Launch extends Command {
     this.fuelSubsystem = fuelSystem;
   }
 
+  // BangBangController controller = new BangBangController();
   // Called when the command is initially scheduled. Set the rollers to the
   // appropriate values for intaking
   @Override
