@@ -48,7 +48,7 @@ public class RobotContainer {
         configureBindings();
     }
 
-    private void configureBindings() {
+    private void configureBindings() { 
 
 
          SequentialCommandGroup launchSequence = new SequentialCommandGroup(
@@ -64,7 +64,6 @@ public class RobotContainer {
         mainController.circle().whileTrue(new Eject(fuelSubsystem));
 
 
-        
         driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, mainController));
 
         fuelSubsystem.setDefaultCommand(fuelSubsystem.run(() -> fuelSubsystem.stop()));
