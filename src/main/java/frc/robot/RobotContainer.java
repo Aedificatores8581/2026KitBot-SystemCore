@@ -52,7 +52,7 @@ public class RobotContainer {
 
 
          SequentialCommandGroup launchSequence = new SequentialCommandGroup(
-            new SpinUp(fuelSubsystem).withTimeout(FuelConstants.SPIN_UP_SECONDS),
+            // new SpinUp(fuelSubsystem).withTimeout(FuelConstants.SPIN_UP_SECONDS),
             new Launch(fuelSubsystem)
         );
 

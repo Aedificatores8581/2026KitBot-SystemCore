@@ -32,11 +32,19 @@ public class CANFuelSubsystem extends SubsystemBase {
   private final SparkMax feederRoller;
   private final SparkMax intakeLauncherRoller;
 
+  private final RelativeEncoder launcher_encoder;
+
+
   /** Creates a new CANBallSubsystem. */
   public CANFuelSubsystem() {
     // create brushed motors for each of the motors on the launcher mechanism
     intakeLauncherRoller = new SparkMax(CANDBUS, INTAKE_LAUNCHER_MOTOR_ID, MotorType.kBrushless);
     feederRoller = new SparkMax(CANDBUS, FEEDER_MOTOR_ID, MotorType.kBrushless);
+
+
+    //Bang-Bang controller
+    launcher_encoder = intakeLauncherRoller.getEncoder();
+
 
     // create the configuration for the feeder roller, set a current limit and apply
     // the config to the controller
@@ -63,6 +71,8 @@ public class CANFuelSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Launching launcher", LAUNCHING_LAUNCHER_VOLTAGE);
     
     SmartDashboard.putNumber("Spin-up feeder", SPIN_UP_FEEDER_VOLTAGE);
+
+    SmartDashboard.putNumber("test launching setpoint", -8);
   }
 
   // A method to set the voltage of the intake roller
@@ -75,6 +85,11 @@ public class CANFuelSubsystem extends SubsystemBase {
     feederRoller.setVoltage(voltage);
   }
 
+  //method to return launcher encoder
+  public RelativeEncoder getLauncherEncoder() {
+    return launcher_encoder;
+  }
+
   // A method to stop the rollers
   public void stop() {
     feederRoller.set(0);
@@ -84,5 +99,8 @@ public class CANFuelSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // SmartDashboard.putNumber("launcher encoder value", launcher_encoder.getVelocity());
+
+    SmartDashboard.putNumber("launcher voltage", intakeLauncherRoller.getAppliedOutput() * intakeLauncherRoller.getBusVoltage());
   }
 }

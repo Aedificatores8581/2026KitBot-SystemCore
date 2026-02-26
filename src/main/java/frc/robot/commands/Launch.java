@@ -10,7 +10,9 @@ import frc.robot.subsystems.CANFuelSubsystem;
 import static frc.robot.Constants.FuelConstants.*;
 
 //Bang-Bang controller
-//  import edu.wpi.first.math.controller.BangBangController;
+ import edu.wpi.first.math.controller.BangBangController;
+ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Launch extends Command {
@@ -23,7 +25,10 @@ public class Launch extends Command {
     this.fuelSubsystem = fuelSystem;
   }
 
-  // BangBangController controller = new BangBangController();
+  BangBangController controller = new BangBangController();
+  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0.2, 0);
+
+
   // Called when the command is initially scheduled. Set the rollers to the
   // appropriate values for intaking
   @Override
@@ -31,7 +36,12 @@ public class Launch extends Command {
     fuelSubsystem
         .setIntakeLauncherRoller(
             // SmartDashboard.getNumber("Launching launcher", LAUNCHING_LAUNCHER_VOLTAGE));
-            SmartDashboard.getNumber("Launching launcher", 0));
+            // SmartDashboard.getNumber("Launching launcher", 0));
+
+            // controller.calculate(fuelSubsystem.getLauncherEncoder().getVelocity(), SmartDashboard.getNumber("test launching setpoint", 0)));
+            // controller.calculate(fuelSubsystem.getLauncherEncoder().getVelocity(), SmartDashboard.getNumber("test launching setpoint", 0)));
+            feedforward.calculate(SmartDashboard.getNumber("test launching setpoint", 0)));
+
     fuelSubsystem.setFeederRoller(SmartDashboard.getNumber("Launching feeder", 0));
   }
 
