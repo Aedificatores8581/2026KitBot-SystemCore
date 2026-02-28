@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import static frc.robot.Constants.OperatorConstants.*;
 import static frc.robot.Constants.FuelConstants.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Constants.FuelConstants;
 import frc.robot.commands.Drive;
 import frc.robot.commands.Eject;
@@ -62,7 +64,6 @@ public class RobotContainer {
         mainController.R1().whileTrue(launchSequence);
 
         mainController.circle().whileTrue(new Eject(fuelSubsystem));
-
 
         driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, mainController));
 

@@ -53,6 +53,10 @@ public final class Constants {
     public static final double SPIN_UP_SECONDS = 1;
 
     public static double LAUNCHER_SETPOINT_TEST = 10;
+
+    public static double LAUNCHER_KS = 1.7;
+    public static double LAUNCHER_KV = 0.95;
+    //other values: 0.75, 0.85
   }
 
   public static final class OperatorConstants {

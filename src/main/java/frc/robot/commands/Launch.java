@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CANFuelSubsystem;
 import static frc.robot.Constants.FuelConstants.*;
+import com.revrobotics.RelativeEncoder;
+
+
 
 //Bang-Bang controller
  import edu.wpi.first.math.controller.BangBangController;
@@ -19,6 +22,8 @@ public class Launch extends Command {
   /** Creates a new Intake. */
 
   CANFuelSubsystem fuelSubsystem;
+  // RelativeEncoder encoder = CANFuelSubsystem.getLauncherEncoder();
+
 
   public Launch(CANFuelSubsystem fuelSystem) {
     addRequirements(fuelSystem);
@@ -26,24 +31,30 @@ public class Launch extends Command {
   }
 
   BangBangController controller = new BangBangController();
-  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0.2, 0);
+  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(LAUNCHER_KS, LAUNCHER_KV, 0);
 
 
   // Called when the command is initially scheduled. Set the rollers to the
   // appropriate values for intaking
   @Override
   public void initialize() {
+    feedforward = new SimpleMotorFeedforward(SmartDashboard.getNumber("kS", 0), SmartDashboard.getNumber("kV", 0), 0);
+
+
     fuelSubsystem
         .setIntakeLauncherRoller(
             // SmartDashboard.getNumber("Launching launcher", LAUNCHING_LAUNCHER_VOLTAGE));
             // SmartDashboard.getNumber("Launching launcher", 0));
 
-            // controller.calculate(fuelSubsystem.getLauncherEncoder().getVelocity(), SmartDashboard.getNumber("test launching setpoint", 0)));
-            // controller.calculate(fuelSubsystem.getLauncherEncoder().getVelocity(), SmartDashboard.getNumber("test launching setpoint", 0)));
+            // CANFuelSubsystem.calculateVoltage() + 
+            // 0.90 * feedforward.calculate(SmartDashboard.getNumber("test launching setpoint", 0)));
+
             feedforward.calculate(SmartDashboard.getNumber("test launching setpoint", 0)));
+
 
     fuelSubsystem.setFeederRoller(SmartDashboard.getNumber("Launching feeder", 0));
   }
+
 
   // Called every time the scheduler runs while the command is scheduled. This
   // command doesn't require updating any values while running

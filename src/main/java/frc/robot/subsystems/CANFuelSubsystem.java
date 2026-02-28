@@ -27,13 +27,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.FuelConstants.*;
 import static frc.robot.Constants.CANBusConstants.*;
 
+import edu.wpi.first.math.controller.BangBangController;
+
+
 
 public class CANFuelSubsystem extends SubsystemBase {
   private final SparkMax feederRoller;
   private final SparkMax intakeLauncherRoller;
 
-  private final RelativeEncoder launcher_encoder;
-
+  static RelativeEncoder launcher_encoder;
+  static BangBangController controller = new BangBangController();
 
   /** Creates a new CANBallSubsystem. */
   public CANFuelSubsystem() {
@@ -73,6 +76,10 @@ public class CANFuelSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Spin-up feeder", SPIN_UP_FEEDER_VOLTAGE);
 
     SmartDashboard.putNumber("test launching setpoint", -8);
+    SmartDashboard.putNumber("kS", LAUNCHER_KS);
+    SmartDashboard.putNumber("kV", LAUNCHER_KV);
+
+    SmartDashboard.putNumber("Launcher Velocity", launcher_encoder.getVelocity());
   }
 
   // A method to set the voltage of the intake roller
@@ -86,9 +93,15 @@ public class CANFuelSubsystem extends SubsystemBase {
   }
 
   //method to return launcher encoder
-  public RelativeEncoder getLauncherEncoder() {
-    return launcher_encoder;
+  // public RelativeEncoder getLauncherEncoder() {
+  //   return launcher_encoder;
+  // }
+
+  public static double calculateVoltage()
+  {
+    return -12 * controller.calculate(launcher_encoder.getVelocity(), -1 * SmartDashboard.getNumber("test launching setpoint", 0));
   }
+
 
   // A method to stop the rollers
   public void stop() {
@@ -102,5 +115,7 @@ public class CANFuelSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("launcher encoder value", launcher_encoder.getVelocity());
 
     SmartDashboard.putNumber("launcher voltage", intakeLauncherRoller.getAppliedOutput() * intakeLauncherRoller.getBusVoltage());
+    SmartDashboard.putNumber("Launcher Velocity", launcher_encoder.getVelocity());
+
   }
 }
