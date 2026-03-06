@@ -28,6 +28,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.SpinUp;
 import frc.robot.commands.Launch;
 import frc.robot.commands.LaunchSequence;
+import frc.robot.commands.MakeSetpoint;
 import frc.robot.commands.LaunchSequence;
 import frc.robot.subsystems.CANDriveSubsystem;
 import frc.robot.subsystems.CANFuelSubsystem;
@@ -48,7 +49,10 @@ public class RobotContainer {
 
     public RobotContainer() {
         configureBindings();
+        SmartDashboard.putData("Auto", autoChooser);
     }
+
+
 
     private void configureBindings() { 
 
@@ -58,12 +62,21 @@ public class RobotContainer {
             new Launch(fuelSubsystem)
         );
 
+        
+
         // Controls
         mainController.L1().whileTrue(new Intake(fuelSubsystem));
+        // mainController.L1().onFalse(SmartDashboard.putNumber("rpm setpoint", 0));
 
         mainController.R1().whileTrue(launchSequence);
 
         mainController.circle().whileTrue(new Eject(fuelSubsystem));
+
+        mainController.povUp().whileTrue(new MakeSetpoint(5000));
+        mainController.povRight().whileTrue(new MakeSetpoint(4500));
+        mainController.povLeft().whileTrue(new MakeSetpoint(4000));
+        mainController.povDown().whileTrue(new MakeSetpoint(3000));
+
 
         driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, mainController));
 

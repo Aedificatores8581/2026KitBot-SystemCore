@@ -43,8 +43,8 @@ public final class Constants {
     // Voltage values for various fuel operations. These values may need to be tuned
     // based on exact robot construction.
     // See the Software Guide for tuning information
-    public static final double INTAKING_FEEDER_VOLTAGE = 8;
-    public static final double INTAKING_INTAKE_VOLTAGE = -8;
+    public static final double INTAKING_FEEDER_VOLTAGE = 12;
+    public static final double INTAKING_INTAKE_VOLTAGE = -3;
     
     public static final double LAUNCHING_FEEDER_VOLTAGE = -10;
     public static final double LAUNCHING_LAUNCHER_VOLTAGE = -10.6;
@@ -53,10 +53,16 @@ public final class Constants {
     public static final double SPIN_UP_SECONDS = 1;
 
     public static double LAUNCHER_SETPOINT_TEST = 10;
+    public static double LAUNCHER_RPM_SETPOINT = 4000;
+    //Voltage * 917
 
-    public static double LAUNCHER_KS = 1.7;
-    public static double LAUNCHER_KV = 0.95;
-    //other values: 0.75, 0.85
+
+    public static double LAUNCHER_KS = 0; //0.17
+    public static double LAUNCHER_KV = 1; //1.95
+
+    public static double LAUNCHER_P = 0.0011; //0.0011
+    public static double LAUNCHER_I = 0;
+    public static double LAUNCHER_D = 0;
   }
 
   public static final class OperatorConstants {

@@ -28,15 +28,20 @@ import static frc.robot.Constants.FuelConstants.*;
 import static frc.robot.Constants.CANBusConstants.*;
 
 import edu.wpi.first.math.controller.BangBangController;
+import edu.wpi.first.math.controller.PIDController;
 
 
 
 public class CANFuelSubsystem extends SubsystemBase {
+  static int counter = 0;
+
   private final SparkMax feederRoller;
   private final SparkMax intakeLauncherRoller;
 
   static RelativeEncoder launcher_encoder;
   static BangBangController controller = new BangBangController();
+  static PIDController pidControl = new PIDController(LAUNCHER_P, 0.0, 0.0);
+
 
   /** Creates a new CANBallSubsystem. */
   public CANFuelSubsystem() {
@@ -75,11 +80,20 @@ public class CANFuelSubsystem extends SubsystemBase {
     
     SmartDashboard.putNumber("Spin-up feeder", SPIN_UP_FEEDER_VOLTAGE);
 
-    SmartDashboard.putNumber("test launching setpoint", -8);
+    SmartDashboard.putNumber("voltage setpoint", -8);
+    SmartDashboard.putNumber("rpm setpoint", 8000);
+
     SmartDashboard.putNumber("kS", LAUNCHER_KS);
     SmartDashboard.putNumber("kV", LAUNCHER_KV);
 
-    SmartDashboard.putNumber("Launcher Velocity", launcher_encoder.getVelocity());
+    SmartDashboard.putNumber("launcher rpm", launcher_encoder.getVelocity());
+
+    SmartDashboard.putNumber("p value", LAUNCHER_P);
+    SmartDashboard.putNumber("i value", LAUNCHER_I);
+    SmartDashboard.putNumber("d value", LAUNCHER_D);
+
+
+
   }
 
   // A method to set the voltage of the intake roller
@@ -97,9 +111,22 @@ public class CANFuelSubsystem extends SubsystemBase {
   //   return launcher_encoder;
   // }
 
-  public static double calculateVoltage()
+  public static double calculateBangBang()
   {
-    return -12 * controller.calculate(launcher_encoder.getVelocity(), -1 * SmartDashboard.getNumber("test launching setpoint", 0));
+    counter++;
+    return -12 * controller.calculate(-1 * launcher_encoder.getVelocity(), 1 * SmartDashboard.getNumber("rpm setpoint", 0));
+  }
+
+  // public static double calculatePID()
+  // {
+  //   counter++;
+  //   return pidControl.calculate(-1 * launcher_encoder.getVelocity(), SmartDashboard.getNumber("rpm setpoint", 0));
+  // }
+
+
+  public static double getVelocity()
+  {
+    return launcher_encoder.getVelocity();
   }
 
 
@@ -115,7 +142,10 @@ public class CANFuelSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("launcher encoder value", launcher_encoder.getVelocity());
 
     SmartDashboard.putNumber("launcher voltage", intakeLauncherRoller.getAppliedOutput() * intakeLauncherRoller.getBusVoltage());
-    SmartDashboard.putNumber("Launcher Velocity", launcher_encoder.getVelocity());
+
+    SmartDashboard.putNumber("launcher rpm", launcher_encoder.getVelocity());
+
+    SmartDashboard.putNumber("counter", counter);
 
   }
 }
