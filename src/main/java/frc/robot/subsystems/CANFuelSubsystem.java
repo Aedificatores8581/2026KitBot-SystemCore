@@ -81,7 +81,7 @@ public class CANFuelSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Spin-up feeder", SPIN_UP_FEEDER_VOLTAGE);
 
     SmartDashboard.putNumber("voltage setpoint", -8);
-    SmartDashboard.putNumber("rpm setpoint", 8000);
+    SmartDashboard.putNumber("rpm setpoint", LAUNCHER_RPM_SETPOINT);
 
     SmartDashboard.putNumber("kS", LAUNCHER_KS);
     SmartDashboard.putNumber("kV", LAUNCHER_KV);

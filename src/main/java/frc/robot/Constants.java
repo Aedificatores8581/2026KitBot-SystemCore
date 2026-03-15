@@ -50,15 +50,15 @@ public final class Constants {
     public static final double LAUNCHING_LAUNCHER_VOLTAGE = -10.6;
 
     public static final double SPIN_UP_FEEDER_VOLTAGE = -6;
-    public static final double SPIN_UP_SECONDS = 1;
+    public static final double SPIN_UP_SECONDS = 0.3;
 
     public static double LAUNCHER_SETPOINT_TEST = 10;
-    public static double LAUNCHER_RPM_SETPOINT = 4000;
+    public static double LAUNCHER_RPM_SETPOINT = 4500;
     //Voltage * 917
 
 
     public static double LAUNCHER_KS = 0; //0.17
-    public static double LAUNCHER_KV = 1; //1.95
+    public static double LAUNCHER_KV = 0; //1.95
 
     public static double LAUNCHER_P = 0.0011; //0.0011
     public static double LAUNCHER_I = 0;

@@ -25,9 +25,8 @@ public class SpinUp extends Command {
   @Override
   public void initialize() {
     fuelSubsystem
-        .setIntakeLauncherRoller(
-            SmartDashboard.getNumber("Launching launcher", 0));
-    fuelSubsystem.setFeederRoller(SmartDashboard.getNumber("Spin-up feeder", 0));
+        .setIntakeLauncherRoller(12);
+    // fuelSubsystem.setFeederRoller(SmartDashboard.getNumber("Spin-up feeder", 0));
   }
 
   // Called every time the scheduler runs while the command is scheduled. This

@@ -30,6 +30,7 @@ import frc.robot.commands.Launch;
 import frc.robot.commands.LaunchSequence;
 import frc.robot.commands.MakeSetpoint;
 import frc.robot.commands.LaunchSequence;
+import frc.robot.commands.ExampleAuto;
 import frc.robot.subsystems.CANDriveSubsystem;
 import frc.robot.subsystems.CANFuelSubsystem;
 
@@ -50,6 +51,9 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         SmartDashboard.putData("Auto", autoChooser);
+
+        autoChooser.addOption("DriveForwardShoot", new ExampleAuto(driveSubsystem, fuelSubsystem));
+        autoChooser.setDefaultOption("DriveForwardShoot", new ExampleAuto(driveSubsystem, fuelSubsystem));
     }
 
 
@@ -61,8 +65,6 @@ public class RobotContainer {
             // new SpinUp(fuelSubsystem).withTimeout(FuelConstants.SPIN_UP_SECONDS),
             new Launch(fuelSubsystem)
         );
-
-        
 
         // Controls
         mainController.L1().whileTrue(new Intake(fuelSubsystem));
